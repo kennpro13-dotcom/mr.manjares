@@ -1,0 +1,198 @@
+/* =========================================================
+   COLORS
+   Change a value here and it updates everywhere on the page.
+   ========================================================= */
+:root {
+  --ink-deep: #0D1B2A;  /* darkest navy: card background, button text */
+  --ink: #1B263B;       /* navy: middle of the page gradient */
+  --steel: #415A77;     /* blue-grey: gradient and photo frame background */
+  --sage: #778D7A;      /* muted green: photo border, small accents */
+  --sand: #D4C4A8;      /* warm tan: titles, divider, button */
+  --cream: #F4F1DE;     /* off-white: main text color */
+
+  /* FONT for the thank-you message. Swap "Kalam" for any Google Font
+     you've added to the <link> in index.html (keep a fallback after it) */
+  --font-message: "Kalam", "Comic Sans MS", cursive;
+}
+
+/* Reset: removes default browser spacing so sizes are predictable */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* =========================================================
+   PAGE BACKGROUND
+   ========================================================= */
+body {
+  min-height: 100vh;               /* at least full screen height */
+  display: flex;
+  justify-content: center;         /* center the cover/card horizontally */
+  align-items: flex-start;         /* keep it at the top (so long cards can scroll) */
+  padding: 48px 20px;              /* space around the cover/card */
+  font-family: "Lora", Georgia, serif;
+  color: var(--cream);
+  /* Sunrise-to-night gradient: sand at the top, dark navy at the bottom */
+  background: linear-gradient(180deg, var(--sand) 0%, var(--steel) 30%, var(--ink) 65%, var(--ink-deep) 100%);
+  background-attachment: fixed;    /* gradient stays put while scrolling */
+}
+
+/* =========================================================
+   FRONT PAGE (cover)
+   Same rounded, translucent look as the card so they feel like a pair.
+   ========================================================= */
+.cover {
+  width: 100%;
+  max-width: 640px;
+  min-height: calc(100vh - 96px);  /* fills the screen (96px = the body's top + bottom padding) */
+  display: flex;
+  flex-direction: column;          /* stack items top to bottom */
+  align-items: center;
+  justify-content: center;         /* vertically center everything */
+  padding: 48px 32px;
+  text-align: center;
+  background: rgba(13, 27, 42, 0.72);           /* semi-transparent navy */
+  border: 1px solid rgba(212, 196, 168, 0.35);  /* faint sand outline */
+  border-radius: 40px;
+  box-shadow: 0 24px 60px rgba(13, 27, 42, 0.5);
+}
+
+/* Needed because .cover sets display:flex, which would otherwise
+   override the "hidden" attribute and keep the cover visible */
+.cover[hidden] { display: none; }
+
+/* "To our dear teacher," (small italic line) */
+.cover-to {
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--sage);
+  margin-bottom: 12px;
+}
+
+/* Big script title.
+   clamp(min, preferred, max) makes the size grow with screen width
+   but never smaller than 3.4rem or bigger than 6.2rem. */
+.cover-title {
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-size: clamp(3.4rem, 15vw, 6.2rem);
+  line-height: 1.05;
+  color: var(--sand);
+}
+
+/* "with love, from your students" */
+.cover-from {
+  font-size: 1.05rem;
+  color: var(--cream);
+  opacity: 0.85;                   /* slightly softer than the main text */
+  margin-bottom: 44px;             /* gap before the button */
+}
+
+/* "Open your card" button */
+.open-btn {
+  font-family: "Lora", Georgia, serif;  /* buttons don't inherit fonts by default */
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--ink-deep);
+  background: var(--sand);
+  border: 0;
+  border-radius: 999px;            /* fully rounded pill shape */
+  padding: 14px 36px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+/* Hover: lighter color and a tiny lift */
+.open-btn:hover { background: var(--cream); transform: translateY(-2px); }
+/* Keyboard focus ring (shows when tabbing to the button) */
+.open-btn:focus-visible { outline: 3px solid var(--sage); outline-offset: 4px; }
+
+/* =========================================================
+   INSIDE THE CARD
+   ========================================================= */
+.card {
+  width: 100%;
+  max-width: 640px;
+  padding: 48px 32px;
+  text-align: center;
+  background: rgba(13, 27, 42, 0.72);
+  border: 1px solid rgba(212, 196, 168, 0.35);
+  border-radius: 40px;
+  box-shadow: 0 24px 60px rgba(13, 27, 42, 0.5);
+  /* Fade-and-rise entrance, plays once when the card appears (defined below) */
+  animation: cardIn 0.6s ease both;
+}
+/* Hides the outline that browsers add when focus moves to the card via script */
+.card:focus { outline: none; }
+
+/* The card slides up 24px while fading in */
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Script title inside the card */
+.title {
+  font-family: "Great Vibes", cursive;
+  font-weight: 400;
+  font-size: clamp(2.8rem, 10vw, 4.5rem);
+  line-height: 1.1;
+  color: var(--sand);
+}
+
+/* Line — star — line (used on both the cover and the card) */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 20px auto 32px;
+  color: var(--sand);
+}
+.divider span { width: 70px; height: 1px; background: var(--sand); opacity: 0.6; }  /* the two thin lines */
+.divider i { font-style: normal; font-size: 0.9rem; }                                /* the ✦ star */
+
+/* Picture area: stays a soft pill-shaped frame until you add your image */
+.photo {
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 4 / 3;             /* keeps the frame's shape at any width */
+  margin: 0 auto 36px;
+  border-radius: 999px;            /* pill shape */
+  overflow: hidden;                /* crops the image to the pill */
+  background: var(--steel);        /* shown while the frame is empty */
+  border: 3px solid var(--sage);
+}
+/* Image fills the frame and is cropped (not stretched) to fit */
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* The message text block: max-width keeps lines short and easy to read.
+   font-family uses the --font-message variable defined at the top of this file */
+.message { max-width: 52ch; margin: 0 auto; font-family: var(--font-message); }
+.message p { font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.1rem; }
+/* First line ("Happy Teacher's Day, Ma'am/Sir!") is larger and sand-colored */
+.message p:first-child { font-size: 1.35rem; color: var(--sand); }
+
+/* Last line: bold (Kalam has no italic, so bold sets it apart), with a thin sage line above it */
+.message .closing {
+  margin-top: 1.6rem;
+  margin-bottom: 0;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(119, 141, 122, 0.6);
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--sand);
+}
+
+/* =========================================================
+   ACCESSIBILITY: for people who turn off animations in their device settings
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .card { animation: none; }
+  .open-btn { transition: none; }
+}
+
+/* =========================================================
+   PHONES (screens 480px wide or less): tighter padding, smaller corners
+   ========================================================= */
+@media (max-width: 480px) {
+  .cover { padding: 36px 20px; border-radius: 28px; }
+  .card { padding: 36px 20px; border-radius: 28px; }
+  .message p { font-size: 1.08rem; }
+}

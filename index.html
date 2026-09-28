@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Makes the page scale properly on phones (needed for the mobile styles in style.css) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Text shown on the browser tab -->
+  <title>Happy Teacher's Day</title>
+
+  <!-- Google Fonts: "Great Vibes" (script title), "Lora" (cover text) and "Kalam" (handwritten message).
+       To change the message font, pick a new one on fonts.google.com, add it to this link,
+       and update --font-message in style.css -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Kalam:wght@300;400;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <!-- All colors, sizes and layout live in style.css (keep it in the same folder) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- =========================================================
+       FRONT PAGE (cover)
+       This is the first thing people see. It disappears when the
+       "Open your card" button is clicked (see the script at the bottom).
+       ========================================================= -->
+  <section class="cover" id="cover">
+
+    <!-- Small greeting above the title. Change it to the teacher's name if you like,
+         e.g. "To Ma'am Santos," -->
+    <p class="cover-to">To our dear teacher,</p>
+
+    <!-- Big script title on the cover -->
+    <h1 class="cover-title">Happy Teacher's Day</h1>
+
+    <!-- Decorative line with a star in the middle (hidden from screen readers) -->
+    <div class="divider" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+
+    <!-- Who the card is from. Edit to your class or section name if you want -->
+    <p class="cover-from">with love, from your students</p>
+
+    <!-- Button that opens the card. Its id "openBtn" is used by the script below.
+         type="button" keeps it a plain button (not a form submit) -->
+    <button class="open-btn" id="openBtn" type="button">Open your card</button>
+  </section>
+
+
+  <!-- =========================================================
+       INSIDE THE CARD (your original page)
+       The "hidden" attribute keeps it invisible until the button is clicked.
+       ========================================================= -->
+  <main class="card" id="card" hidden>
+
+    <!-- Title inside the card -->
+    <h1 class="title">Happy Teacher's Day</h1>
+
+    <!-- Decorative divider (same style as on the cover) -->
+    <div class="divider" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+
+    <!-- PICTURE: put your picture here.
+         Example: <img src="your-picture.jpg" alt="Describe the picture">
+         Tip: the image is cropped to fit a soft pill-shaped frame (4:3),
+         so photos with the subject near the center work best. -->
+    <figure class="photo">
+    <img src="teacher.jpg" alt="A picture of our teacher">
+    </figure>
+
+    <!-- The thank-you message. Each <p> is one paragraph -->
+    <section class="message">
+      <!-- First paragraph is styled larger and in sand color (see .message p:first-child in style.css) -->
+      <p>Happy Teacher’s Day, Ma’am/Sir! 💐❤️</p>
+      <p>Thank you for always being patient with us, even when we sometimes make your teaching life a little harder. 😭😂</p>
+      <p>We really appreciate your kindness, guidance, and all the effort you put into teaching us. Thank you for believing in us and for making learning a little more fun.</p>
+      <p>We may forget some lessons, but we’ll never forget how much you’ve helped and inspired us.</p>
+      <!-- Closing line: italic, with a thin line above it -->
+      <p class="closing">Happy Teacher’s Day! 🥰📚✨</p>
+    </section>
+
+  </main>
+
+
+  <!-- =========================================================
+       SCRIPT: swaps the cover for the card when the button is clicked
+       ========================================================= -->
+  <script>
+    // Grab the three elements we need by their ids
+    var cover = document.getElementById('cover');
+    var card = document.getElementById('card');
+    var openBtn = document.getElementById('openBtn');
+
+    // Lets us move keyboard focus to the card after opening (helps keyboard and screen-reader users)
+    card.setAttribute('tabindex', '-1');
+
+    openBtn.addEventListener('click', function () {
+      cover.hidden = true;     // hide the front page
+      card.hidden = false;     // show the card (its fade-in animation is in style.css)
+      window.scrollTo(0, 0);   // start at the top of the card
+      card.focus();            // move focus into the card
+    });
+  </script>
+
+</body>
+</html>
